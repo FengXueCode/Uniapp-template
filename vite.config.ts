@@ -1,7 +1,44 @@
+/*
+ * @Author: FengXue
+ * @Date: 2024-06-12 08:55:37
+ * @LastEditors: FengXue
+ * @LastEditTime: 2024-06-12 09:00:22
+ * @filePath: Do not edit
+ */
 import { defineConfig } from "vite";
 import uni from "@dcloudio/vite-plugin-uni";
-
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from "unplugin-vue-components/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [uni()],
+  plugins: [uni(),
+  AutoImport({
+    imports: [
+      "vue",
+      "uni-app",
+      {
+        //自定义的自动引入库
+        "leaflet": [
+          //哪些方法需要自动引入
+          ['default', 'L']
+        ],
+      }
+    ],
+    //本地目录 
+    dirs: [
+
+    ]
+  }),
+  Components({
+    dirs: [
+      "src/components",
+      "src/pages"
+    ],
+    dts: "src/components.d.ts",
+    resolvers: [
+      //自动导入的组件库
+
+    ]
+  })
+  ],
 });
